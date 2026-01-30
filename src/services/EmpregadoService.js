@@ -5,7 +5,7 @@ class EmpregadoService extends BaseService {
         // 1. Nome da Tabela
         // 2. A Chave Primária (PK) - Única e isolada
         // 3. A LISTA de quem deve ser validado 
-        super('Empregados', 'NR_Matricula', ['NM_Pessoa']);
+        super('Empregados', 'NR_Matricula', ['NM_Pessoa','CD_Pessoa']);
     }
 }
 

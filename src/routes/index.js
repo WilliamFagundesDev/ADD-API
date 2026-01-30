@@ -6,6 +6,7 @@ const CategoriaController = require('../controllers/CategoriaController');
 const EmpregadoController = require('../controllers/EmpregadoController');
 const ProgramasController = require('../controllers/ProgramasController');
 const MetasCategoriasController = require('../controllers/MetasCategoriasController');
+const MetasController = require('../controllers/MetasController');
 
 // 1. Rota de Status (Completa)
 router.get('/status', (req, res) => {
@@ -29,7 +30,8 @@ router.get('/ajuda', (req, res) => {
         exemplo_payload_empregado: {
             NR_Matricula: 12345,
             NM_Pessoa: "Nome do Colaborador",
-            CD_Categoria: 1
+            CD_Categoria: 1,
+            CD_Pessoa: "12345"
         }
     });
 });
@@ -57,6 +59,12 @@ router.get('/metas-categorias/:id', MetasCategoriasController.getById);
 router.post('/metas-categorias', MetasCategoriasController.create);
 router.put('/metas-categorias/:id', MetasCategoriasController.update);
 router.delete('/metas-categorias/:id', MetasCategoriasController.delete);
+
+router.get('/metas', MetasController.getAll);
+router.get('/metas/:id', MetasController.getById);
+router.post('/metas', MetasController.create);
+router.put('/metas/:id', MetasController.update);
+router.delete('/metas/:id', MetasController.delete);
 
 // 4. Fallback: Se a pessoa errar a rota, cai na ajuda
 router.use((req, res) => {
