@@ -35,11 +35,14 @@ class BaseService {
         return await request.query(query);
     }
 
-    async update(id, data) {
+async update(id, data) {
         const pool = await poolPromise;
-        const keys = Object.keys(data);
         
-        // Monta a string: "Coluna1 = @Coluna1, Coluna2 = @Coluna2"
+        // CORREÇÃO: Removemos a Primary Key da lista de campos para não tentar atualizá-la
+        // Isso evita o erro "Cannot update identity column"
+        const keys = Object.keys(data).filter(key => key !== this.primaryKey);
+        
+        // Monta a string: "DS_Categoria = @DS_Categoria"
         const setQuery = keys.map(key => `${key} = @${key}`).join(', ');
 
         const request = pool.request();
@@ -48,6 +51,7 @@ class BaseService {
         keys.forEach(key => request.input(key, data[key]));
 
         const query = `UPDATE ${this.tableName} SET ${setQuery} WHERE ${this.primaryKey} = @id`;
+        
         return await request.query(query);
     }
 
